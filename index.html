@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List Crunching</title>
+	<style>
+		body {
+			font-family: "Arial", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+		}
+		
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		
+		th, td {
+			padding: 15px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+
+		.logo {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 20px;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="logo">
+		<img src="data:image/png;base64,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" alt="Logo" width="500">
+	</div>
+	<h1>Enter Company Information</h1>
+	<form id="companyForm">
+		<label for="source">Source:</label>
+		<input type="text" id="source" required><br><br>
+        <label for="user">Team Member:</label>
+        <select id="user" name="user" required>
+            <option value="Latifa">Latifa</option>
+            <option value="Josh">Josh</option>
+            <option value="Tom">Tom</option>
+            <option value="David">David</option>
+            <option value="Charles">Charles</option>
+            <option value="Will">Will</option>
+            <option value="Oliver">Oliver</option>
+        </select>
+		<label for="company">Company Name:</label>
+		<input type="text" id="company" required>
+	</form>
+	<br>
+	<button onclick="addCompany()">Add Company</button>
+	<button onclick="exportTableToExcel('companyTable', 'Company Data' + '_' + new Date().toLocaleDateString())">Download as Excel</button>
+	<br><br>
+	<table id="companyTable">
+		<thead>
+			<tr>
+				<th>Source</th>
+				<th>Company Name</th>
+                <th>URL</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+    
+    <script>
+
+        function addCompany() {
+            var source = document.getElementById("source").value + "_" + document.getElementById("user").value + "_" + new Date().toLocaleDateString();
+            var company = document.getElementById("company").value;
+            var table = document.getElementById("companyTable").getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow(0);
+            var sourceCell = newRow.insertCell(0);
+            var companyCell = newRow.insertCell(1);
+            var urlCell = newRow.insertCell(2);
+            sourceCell.innerHTML = source;
+            companyCell.innerHTML = company;
+            document.getElementById("company").value = "";
+            document.getElementById("company").focus();
+
+            var apiKey = "AIzaSyDmGgQmSJm32y8D9_dwOXXzAykEOqep82g";
+            var cx = "14b03151f0cba4061";
+            var query = company + " software";
+            var searchUrl = "https://www.googleapis.com/customsearch/v1?key=" + apiKey + "&cx=" + cx + "&q=" + encodeURIComponent(query);
+            fetch(searchUrl)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.items && data.items.length > 0) {
+                        var firstResultUrl = null;
+                        for (var i = 0; i < data.items.length; i++) {
+                            var link = data.items[i].link;
+                            if (link.indexOf("linkedin.com") === -1 && link.indexOf("crunchbase.com") === -1 && link.indexOf("pitchbook.com") === -1 && link.indexOf("wikipedia.org") === -1 && link.indexOf("g2.com") === -1 && link.indexOf("gartner.com") === -1 && link.indexOf("capterra.com") === -1 && link.indexOf("mimecast.com") === -1 && link.indexOf("merriam-webster.com") === -1 && link.indexOf("google.com") === -1) {
+                                var url = new URL(link);
+                                firstResultUrl = url.hostname;
+                                break;
+                            }
+                        }
+                        if (firstResultUrl) {
+                            urlCell.innerHTML = "<a href='" + link + "' target='_blank'>" + firstResultUrl + "</a>";
+                            var affinityUrl = "https://api.affinity.co/organizations";
+                            var affinityApiKey = "K1W3ijf2dPOLyGRB9pS0OasE_Q6RcNOgsBXRcfcJh9o";
+                            var affinityHeaders = {
+                                "Content-Type": "application/json",
+                                "Authorization": affinityApiKey
+                            };
+                            var affinityData = {
+                                "name": company,
+                                "domain": firstResultUrl
+                            };
+                            fetch(affinityUrl, {
+                                method: 'POST',
+                                headers: affinityHeaders,
+                                body: JSON.stringify(affinityData)
+                            })
+                                .then(function(response) {
+                                    if (response.ok) {
+                                        console.log("Affinity Organisation Creation API request succeeded");
+                                        var responseObj = response.json();
+                                        var id = responseObj.id;
+                                        var affinitylistUrl = "https://api.affinity.co/lists/148158/list-entries";
+                                        var affinity_list_entry_data = {
+                                            "entity_id": id
+                                        };
+                                        return responseObj;
+                                    
+                                        fetch(affinitylistUrl, {
+                                            method: 'POST',
+                                            headers: affinityHeaders,
+                                            body: JSON.stringify(affinity_list_entry_data)
+                                        })
+                                            .then(function(response) {
+                                                if (response.ok) {
+                                                    console.log("Affinity List Entry API request succeeded");
+                                                    var affinity_field_value_url = "https://api.affinity.co/field-values";
+                                                    var field_id = "2130179";
+                                                    var affinityFieldData = {
+                                                        "field_id": field_id,
+                                                        "entity_id": id,
+                                                        "value": source
+                                                    };
+                                                    fetch(affinity_field_value_url, {
+                                                        method: 'POST',
+                                                        headers: affinityHeaders,
+                                                        body: JSON.stringify(affinityFieldData)
+                                                    })
+                                                    .then(function(response) {
+                                                        if(response.ok) {
+                                                            console.log("Affinity Source Field API request succeeded");
+                                                        } else {
+                                                            console.log("Affinity Source Field API request failed");
+                                                        }
+                                                    })
+                                                } else {
+                                                    console.log("Affinity List Etnry API request failed")
+                                                }
+                                            })
+                                    } else {
+                                        console.log("Affinity Organisation Creation API request failed");
+                                    }
+                                });
+                        } else {
+                            urlCell.innerHTML = "No relevant results found";
+                        }
+                    } else {
+                        urlCell.innerHTML = "No results found";
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    urlCell.innerHTML = "Error occurred";
+                });
+        }
+
+        function exportTableToExcel(tableID, filename = ''){
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+            
+            // Specify file name
+            filename = filename?filename+'.xls':'excel_data.xls';
+            
+            // Create download link element
+            downloadLink = document.createElement("a");
+            
+            document.body.appendChild(downloadLink);
+            
+            if(navigator.msSaveOrOpenBlob){
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            }else{
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+            
+                // Setting the file name
+                downloadLink.download = filename;
+                
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+
+        document.getElementById("company").addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                addCompany();
+            }
+        });
+    </script>
+
+</body>
+</html>
