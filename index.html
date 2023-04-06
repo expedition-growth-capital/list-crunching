@@ -100,67 +100,22 @@
                         }
                         if (firstResultUrl) {
                             urlCell.innerHTML = "<a href='" + link + "' target='_blank'>" + firstResultUrl + "</a>";
-                            var affinityUrl = "https://api.affinity.co/organizations";
-                            var affinityApiKey = "K1W3ijf2dPOLyGRB9pS0OasE_Q6RcNOgsBXRcfcJh9o";
-                            var affinityHeaders = {
+                            var zapierUrl = "https://hooks.zapier.com/hooks/catch/11792665/328zfo1/";
+                            var zapierHeaders = {
                                 "Content-Type": "application/json",
-                                "Authorization": affinityApiKey
                             };
-                            var affinityData = {
+                            var zapierData = {
                                 "name": company,
-                                "domain": firstResultUrl
+                                "domain": firstResultUrl,
+                                "source": source
                             };
-                            fetch(affinityUrl, {
+                            fetch(zapierUrl, {
                                 method: 'POST',
-                                headers: affinityHeaders,
-                                body: JSON.stringify(affinityData)
+                                mode: 'no-cors',
+                                headers: zapierHeaders,
+                                body: JSON.stringify(zapierData)
                             })
-                                .then(function(response) {
-                                    if (response.ok) {
-                                        console.log("Affinity Organisation Creation API request succeeded");
-                                        var responseObj = response.json();
-                                        var id = responseObj.id;
-                                        var affinitylistUrl = "https://api.affinity.co/lists/148158/list-entries";
-                                        var affinity_list_entry_data = {
-                                            "entity_id": id
-                                        };
-                                        return responseObj;
-                                    
-                                        fetch(affinitylistUrl, {
-                                            method: 'POST',
-                                            headers: affinityHeaders,
-                                            body: JSON.stringify(affinity_list_entry_data)
-                                        })
-                                            .then(function(response) {
-                                                if (response.ok) {
-                                                    console.log("Affinity List Entry API request succeeded");
-                                                    var affinity_field_value_url = "https://api.affinity.co/field-values";
-                                                    var field_id = "2130179";
-                                                    var affinityFieldData = {
-                                                        "field_id": field_id,
-                                                        "entity_id": id,
-                                                        "value": source
-                                                    };
-                                                    fetch(affinity_field_value_url, {
-                                                        method: 'POST',
-                                                        headers: affinityHeaders,
-                                                        body: JSON.stringify(affinityFieldData)
-                                                    })
-                                                    .then(function(response) {
-                                                        if(response.ok) {
-                                                            console.log("Affinity Source Field API request succeeded");
-                                                        } else {
-                                                            console.log("Affinity Source Field API request failed");
-                                                        }
-                                                    })
-                                                } else {
-                                                    console.log("Affinity List Etnry API request failed")
-                                                }
-                                            })
-                                    } else {
-                                        console.log("Affinity Organisation Creation API request failed");
-                                    }
-                                });
+
                         } else {
                             urlCell.innerHTML = "No relevant results found";
                         }
