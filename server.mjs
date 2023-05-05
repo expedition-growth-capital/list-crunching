@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(path.resolve(), 'views'));
 
 app.get('/', (req, res) => {
-  res.render('index', { apiKey });
+  res.render('views/index', { apiKey });
 });
 
 app.use('/node_modules', express.static(path.join(path.dirname(import.meta.url), '..', 'node_modules'), {
